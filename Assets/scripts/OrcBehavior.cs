@@ -11,12 +11,12 @@ public class OrcBehavior : MonoBehaviour
     public LayerMask playerLayer;
     public LayerMask obstacleLayer;
     private bool stun = false;
-    private bool isLookingRight = true;
-    private float timer;
-    private bool isChasing = false;
+    public bool isLookingRight = true;
+    public float timer;
+    public bool isChasing = false;
     private Transform player;
     private Vector2 dirToPlayer;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     public CapsuleCollider2D collider1;
     public float bounceForce = 30f;
     private bool canJump = false;
@@ -35,7 +35,7 @@ public class OrcBehavior : MonoBehaviour
     }
     async void Awake()
     { await UnityServices.InitializeAsync();}
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
         if (!stun)
         {
@@ -137,7 +137,7 @@ public class OrcBehavior : MonoBehaviour
         animator.SetFloat("chase", 1f);
     }
     private void stepsSFX()
-    {
+    {if(audioManager != null)
         audioManager.PlaySFX(audioManager.steps);
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -170,6 +170,7 @@ public class OrcBehavior : MonoBehaviour
                     {
                         Destroy(player);
                     }
+                    if(audioManager != null)
                     audioManager.PlaySFX(audioManager.swallow);
                     animator.Play("orc_eat");
                     Invoke("dead", 2);

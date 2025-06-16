@@ -9,6 +9,7 @@ TagManager:
   - death
   - orc
   - door
+  - lant
   layers:
   - Default
   - TransparentFX

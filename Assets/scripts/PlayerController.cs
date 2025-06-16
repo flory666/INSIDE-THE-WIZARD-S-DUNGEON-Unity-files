@@ -2,25 +2,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
-    private Controls controls;
+    public Controls controls;
     public Animator animator;
     private Vector2 moveInput;
     public float speed = 7f;
     public float jumpForce = 17f;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private bool isInteracting = false;
     private PushableBox currentBox;
     public Transform holdPoint;
     private FixedJoint2D boxJoint;
-    private ClimbableChain currentChain;
-    private bool isClimbing = false;
+    public ClimbableChain currentChain;
+    public bool isClimbing = false;
     public float climbSpeed = 5f;
     public GameObject hand;
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
     private bool isGrounded;
-    audioscipt audioManager;
+    public audioscipt audioManager;
     private ButtonInteractable currentButton;
 
     private void Awake()
@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 
-    private void Interact()
+    public void Interact()
     {
         Debug.Log("Interact button pressed");
 
@@ -203,10 +203,15 @@ public class PlayerController : MonoBehaviour
     { SceneManager.LoadScene("main menu"); }
     private void stepsSFX()
     {
-        audioManager.PlaySFX(audioManager.steps);
+        if (audioManager != null)
+            audioManager.PlaySFX(audioManager.steps);
     }
     private void chainSFX()
-    {audioManager.PlaySFX(audioManager.chain);}
+
+    {
+        if (audioManager != null)
+            audioManager.PlaySFX(audioManager.chain);
+    }
 
     public void OnTriggerEnteredFromChild(Collider2D other)
     {
@@ -266,4 +271,5 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    
 }
